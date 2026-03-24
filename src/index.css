@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Syne", sans-serif;
+
+  --color-brand-bg: #000000;
+  --color-brand-accent: #06b6d4; /* Cyan-500 */
+  --color-brand-accent-hover: #0891b2;
+  --color-brand-yes: #22c55e; /* Green-500 */
+  --color-brand-no: #ef4444; /* Red-500 */
+  --color-brand-card: #0a0a0a;
+  --color-brand-border: #262626;
+  --color-brand-muted: #737373;
+}
+
+body {
+  @apply bg-brand-bg text-white font-sans antialiased selection:bg-brand-accent selection:text-black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-display tracking-tight;
+}
+
+.mono {
+  @apply font-mono;
+}
+
+/* Professional Trading Terminal Elements */
+.terminal-border {
+  @apply border border-brand-border;
+}
+
+.terminal-card {
+  @apply bg-brand-card border border-brand-border hover:border-brand-accent/30 transition-all duration-300;
+}
+
+.terminal-header {
+  @apply border-b border-brand-border bg-white/5 p-4 flex items-center justify-between;
+}
+
+.btn-primary {
+  @apply bg-brand-accent hover:bg-brand-accent-hover text-black font-black py-3 px-6 transition-all active:scale-95 uppercase tracking-[0.2em] text-[10px] italic;
+}
+
+.btn-secondary {
+  @apply bg-transparent border border-brand-border hover:border-brand-accent text-white font-black py-3 px-6 transition-all uppercase tracking-[0.2em] text-[10px] italic;
+}
+
+.btn-ghost {
+  @apply bg-transparent hover:bg-white/5 text-brand-muted hover:text-white font-black py-2 px-4 transition-all uppercase tracking-[0.2em] text-[9px] italic;
+}
+
+.input-terminal {
+  @apply bg-brand-bg border border-brand-border focus:border-brand-accent text-white p-3 outline-none transition-all font-mono text-sm font-bold placeholder:text-brand-muted/50;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
