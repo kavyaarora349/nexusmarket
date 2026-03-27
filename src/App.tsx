@@ -7,7 +7,6 @@ import { Markets } from './pages/Markets';
 import { MarketDetail } from './pages/MarketDetail';
 import { CreateMarket } from './pages/CreateMarket';
 import { Portfolio } from './pages/Portfolio';
-import { Resolve } from './pages/Resolve';
 import { Parlay } from './pages/Parlay';
 import { Syndicates } from './pages/Syndicates';
 
@@ -30,8 +29,6 @@ export default function App() {
                   <Route path="/parlay" element={<Parlay />} />
                   <Route path="/syndicates" element={<Syndicates />} />
                   <Route path="/portfolio" element={<Portfolio />} />
-                  <Route path="/resolve" element={<Resolve />} />
-                  <Route path="/resolve/:id" element={<Resolve />} />
                 </Routes>
               </Layout>
             </Router>

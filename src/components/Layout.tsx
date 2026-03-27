@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { WalletConnect } from './WalletConnect';
-import { LayoutGrid, PlusSquare, User, Shield, Activity, Zap, Layers, Users, LogOut } from 'lucide-react';
+import { LayoutGrid, PlusSquare, User, Activity, Zap, Layers, Users, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
 
@@ -15,7 +15,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     { path: '/syndicates', label: 'Syndicates', icon: Users },
     { path: '/create', label: 'Create', icon: PlusSquare },
     { path: '/portfolio', label: 'Portfolio', icon: User },
-    { path: '/resolve', label: 'Oracle', icon: Shield },
   ];
 
   return (
