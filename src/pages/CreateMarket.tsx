@@ -4,7 +4,7 @@ import { Plus, Info, Calendar, Tag, FileText, AlertTriangle, Zap, ShieldCheck, L
 import { useWallet } from '../context/WalletContext';
 
 export const CreateMarket: React.FC = () => {
-  const { isConnected, connect } = useWallet();
+  const { isConnected, connect, connectWeb3Auth } = useWallet();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({

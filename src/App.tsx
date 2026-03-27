@@ -8,25 +8,36 @@ import { MarketDetail } from './pages/MarketDetail';
 import { CreateMarket } from './pages/CreateMarket';
 import { Portfolio } from './pages/Portfolio';
 import { Resolve } from './pages/Resolve';
+import { Parlay } from './pages/Parlay';
+import { Syndicates } from './pages/Syndicates';
+
+import { AuthProvider } from './context/AuthContext';
+import { AccountProvider } from './context/AccountContext';
 
 export default function App() {
   return (
-    <WalletProvider>
-      <NetworkGuard>
-        <Router>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/markets" element={<Markets />} />
-              <Route path="/market/:id" element={<MarketDetail />} />
-              <Route path="/create" element={<CreateMarket />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/resolve" element={<Resolve />} />
-              <Route path="/resolve/:id" element={<Resolve />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </NetworkGuard>
-    </WalletProvider>
+    <AuthProvider>
+      <WalletProvider>
+        <AccountProvider>
+          <NetworkGuard>
+            <Router>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/markets" element={<Markets />} />
+                  <Route path="/market/:id" element={<MarketDetail />} />
+                  <Route path="/create" element={<CreateMarket />} />
+                  <Route path="/parlay" element={<Parlay />} />
+                  <Route path="/syndicates" element={<Syndicates />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/resolve" element={<Resolve />} />
+                  <Route path="/resolve/:id" element={<Resolve />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </NetworkGuard>
+        </AccountProvider>
+      </WalletProvider>
+    </AuthProvider>
   );
 }

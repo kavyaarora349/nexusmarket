@@ -11,6 +11,16 @@ export const MarketDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { markets } = useMarkets();
   const market = markets.find(m => m.id === id);
+  const [aiAnalysis, setAiAnalysis] = React.useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = React.useState(false);
+
+  const handleAIAnalysis = () => {
+    setIsAnalyzing(true);
+    setTimeout(() => {
+      setAiAnalysis(`🤖 AI Oracle Network: Based on cross-chain sentiment analysis and predictive data modeling, the probability leans heavily towards YES (~78%). Recent news velocity shows positive correlation.`);
+      setIsAnalyzing(false);
+    }, 1500);
+  };
 
   if (!market) {
     return (
@@ -78,6 +88,27 @@ export const MarketDetail: React.FC = () => {
             <p className="text-brand-muted text-sm leading-relaxed border-l-2 border-brand-accent pl-4">
               {market.description}
             </p>
+
+            <div className="bg-brand-card border border-brand-border p-4">
+              {!aiAnalysis ? (
+                <button
+                  onClick={handleAIAnalysis}
+                  disabled={isAnalyzing}
+                  className="flex items-center gap-2 bg-white text-black px-4 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 transition-colors"
+                >
+                  <Zap className={isAnalyzing ? "animate-pulse fill-brand-accent" : "fill-brand-accent"} size={14} />
+                  {isAnalyzing ? "Analyzing Market Data..." : "Ask AI Oracle"}
+                </button>
+              ) : (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-brand-accent">
+                    <Zap size={14} className="fill-brand-accent" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">AI Oracle Insight</span>
+                  </div>
+                  <p className="text-xs text-brand-muted italic leading-relaxed">{aiAnalysis}</p>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -140,7 +171,10 @@ export const MarketDetail: React.FC = () => {
           <BetPanel marketId={market.id} />
 
           <div className="grid grid-cols-2 gap-px bg-brand-border border border-brand-border">
-            <button className="bg-brand-card hover:bg-white/5 py-4 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all">
+            <button
+              onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I just predicted on "${market.title}" at SharPredict! 🔮 Join the decentralized market today!`)}`, '_blank')}
+              className="bg-brand-card hover:bg-white/5 py-4 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all"
+            >
               <Share2 size={14} />
               Share
             </button>

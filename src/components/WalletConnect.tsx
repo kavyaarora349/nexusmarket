@@ -3,7 +3,7 @@ import { useWallet } from '../context/WalletContext';
 import { Wallet, LogOut, ShieldAlert, ChevronDown } from 'lucide-react';
 
 export const WalletConnect: React.FC = () => {
-  const { address, isConnected, isCorrectNetwork, connect, disconnect } = useWallet();
+  const { address, isConnected, isCorrectNetwork, connect, connectWeb3Auth, disconnect } = useWallet();
 
   if (!isConnected) {
     return (
@@ -31,7 +31,7 @@ export const WalletConnect: React.FC = () => {
           {address?.slice(0, 6)}...{address?.slice(-4)}
         </span>
         <ChevronDown size={12} className="text-brand-muted group-hover:text-brand-accent transition-colors" />
-        
+
         <button
           onClick={(e) => {
             e.stopPropagation();

@@ -13,14 +13,26 @@ export const NetworkGuard: React.FC<{ children: React.ReactNode }> = ({ children
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: SHARDEUM_SPHINX.chainId }],
         });
+        window.location.reload();
       } catch (switchError: any) {
         if (switchError.code === 4902) {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [SHARDEUM_SPHINX],
-          });
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [SHARDEUM_SPHINX],
+            });
+            window.location.reload();
+          } catch (addError: any) {
+            console.error("Error adding chain:", addError);
+            alert(`Failed to add Shardeum network to MetaMask: ${addError.message || addError.code}`);
+          }
+        } else {
+          console.error("Error switching chain:", switchError);
+          alert(`Failed to switch network in MetaMask: ${switchError.message || switchError.code}`);
         }
       }
+    } else {
+      alert("MetaMask not found!");
     }
   };
 
@@ -34,7 +46,7 @@ export const NetworkGuard: React.FC<{ children: React.ReactNode }> = ({ children
           <div className="space-y-3">
             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">Network Error</h2>
             <p className="text-[10px] text-brand-muted font-bold uppercase tracking-[0.2em] leading-relaxed">
-              NexusMarket protocol is strictly deployed on <span className="text-brand-accent">Shardeum Sphinx 1.X</span>. Please switch your provider network to continue.
+              NexusMarket protocol is strictly deployed on <span className="text-brand-accent">Shardeum Atomium</span>. Please switch your provider network to continue.
             </p>
           </div>
           <button
