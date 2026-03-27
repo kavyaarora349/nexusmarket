@@ -1,15 +1,16 @@
 export const SHARDEUM_SPHINX = {
-  chainId: '0x1fb7', // 8119 in hex
-  chainName: 'Shardeum EVM Testnet',
+  chainId: '0x1f93', // 8083 in hex
+  chainName: 'Shardeum Atomium (Testnet)',
   nativeCurrency: {
     name: 'SHM',
     symbol: 'SHM',
     decimals: 18,
   },
   rpcUrls: [
-    'https://api-mezame.shardeum.org',
+    'https://api-testnet.shardeum.org/',
+    'https://sphinx.shardeum.org/',
   ],
-  blockExplorerUrls: ['https://explorer-mezame.shardeum.org'],
+  blockExplorerUrls: ['https://explorer-testnet.shardeum.org/'],
 };
 
 export const HARDHAT_LOCAL = {
