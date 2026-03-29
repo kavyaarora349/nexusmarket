@@ -73,7 +73,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </span>
               </div>
             </div>
-            
+
             {/* Auth Controls */}
             {user ? (
               <div className="flex items-center gap-3 px-4 py-1.5 bg-brand-accent/5 border border-brand-accent/20 rounded text-brand-accent">
@@ -84,7 +84,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   <span className="text-xs font-bold leading-none">{user.email?.split('@')[0]}</span>
                   <span className="text-[9px] uppercase tracking-wider">Online</span>
                 </div>
-                <button 
+                <button
                   onClick={signOut}
                   className="ml-2 hover:text-white transition-colors"
                   title="Sign Out"
@@ -94,13 +94,13 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <button 
+                <button
                   onClick={() => { setAuthModalView('login'); setAuthModalOpen(true); }}
                   className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-brand-accent transition-colors"
                 >
                   Sign In
                 </button>
-                <button 
+                <button
                   onClick={() => { setAuthModalView('signup'); setAuthModalOpen(true); }}
                   className="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-brand-accent text-black rounded hover:bg-brand-accent/90 transition-colors"
                 >
@@ -108,7 +108,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </button>
               </div>
             )}
-            
+
             <WalletConnect />
           </div>
         </div>

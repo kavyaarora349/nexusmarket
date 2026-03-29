@@ -32,7 +32,7 @@ export const Portfolio: React.FC = () => {
 
   const activeBets = history.filter(b => b.status === 'Active');
   const resolvedBets = history.filter(b => b.status === 'Resolved');
-  
+
   const stats = [
     { label: 'Net Worth', value: `${balance.toLocaleString()} SHM`, change: '+0%', isPositive: true },
     { label: 'Active Positions', value: activeBets.length.toString(), change: `${resolvedBets.length} Resolved`, isPositive: true },
@@ -40,7 +40,7 @@ export const Portfolio: React.FC = () => {
     { label: 'Bet Count', value: history.length.toString(), change: 'Live', isPositive: true },
   ];
 
-// No mock positions needed anymore as we use history
+  // No mock positions needed anymore as we use history
 
 
   return (
@@ -169,13 +169,12 @@ export const Portfolio: React.FC = () => {
                         </div>
                       </td>
                       <td className="p-4">
-                        <span className={`text-[10px] font-black px-2 py-0.5 ${
-                          pos.side === 'YES'
+                        <span className={`text-[10px] font-black px-2 py-0.5 ${pos.side === 'YES'
                             ? 'bg-brand-yes/20 text-brand-yes'
                             : pos.side === 'NO'
                               ? 'bg-brand-no/20 text-brand-no'
                               : 'bg-brand-accent/20 text-brand-accent'
-                        }`}>
+                          }`}>
                           {pos.side}
                         </span>
                       </td>
@@ -260,7 +259,7 @@ export const Portfolio: React.FC = () => {
               </div>
             </div>
 
-            <a href="https://docs.shardeum.org/faucet/sphinx" target="_blank" rel="noreferrer" className="block text-center border border-brand-accent text-brand-accent font-black uppercase tracking-[0.2em] py-4 hover:bg-brand-accent hover:text-black transition-colors text-xs w-full">
+            <a href="https://docs.shardeum.org/docs/developer/faucet" target="_blank" rel="noreferrer" className="block text-center border border-brand-accent text-brand-accent font-black uppercase tracking-[0.2em] py-4 hover:bg-brand-accent hover:text-black transition-colors text-xs w-full">
               Get Testnet SHM
             </a>
           </div>

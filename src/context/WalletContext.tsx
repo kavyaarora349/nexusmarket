@@ -27,7 +27,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const fetchBalance = useCallback(async (addr?: string | null, p?: ethers.Provider | null) => {
     const fetchAddr = addr !== undefined ? addr : address;
     const fetchProvider = p !== undefined ? p : provider;
-    
+
     if (fetchAddr && fetchProvider) {
       try {
         console.log("Fetching balance for", fetchAddr);
@@ -90,11 +90,12 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const connect = async () => {
     if (window.ethereum) {
       try {
+        localStorage.removeItem('web3auth_mock_key');
         let browserProvider = new ethers.BrowserProvider(window.ethereum);
-        const accounts = await browserProvider.send("eth_requestAccounts", []);
+        await browserProvider.send("eth_requestAccounts", []);
         browserProvider = await ensureCorrectNetwork(browserProvider);
         const s = await browserProvider.getSigner();
-        const selectedAddress = accounts[0];
+        const selectedAddress = await s.getAddress();
 
         console.log("Connected account:", selectedAddress);
         setProvider(browserProvider);
@@ -119,7 +120,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
               await new Promise(resolve => setTimeout(resolve, 1000 * retries));
             } else {
               console.error("Failed to fetch initial balance after retries:", balErr?.message);
-              setBalance("0.00");
+              // Keep the last known balance instead of overwriting it with a fake zero.
             }
           }
         }
@@ -140,7 +141,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     localStorage.removeItem('web3auth_mock_key');
   };
 
-  const connectWeb3Auth = async () => {
+  const connectWeb3Auth = useCallback(async () => {
     // Simulates Web3Auth / Biconomy Account Abstraction login (Gasless/Email)
     try {
       let privKey = localStorage.getItem('web3auth_mock_key');
@@ -161,21 +162,46 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     } catch (error) {
       console.error("Web3Auth Connection error", error);
     }
-  };
+  }, [fetchBalance]);
 
   useEffect(() => {
-    // Auto-connect if web3auth mock key exists
-    if (localStorage.getItem('web3auth_mock_key')) {
-      connectWeb3Auth();
-    }
-  }, []);
+    const restoreConnection = async () => {
+      if (window.ethereum) {
+        try {
+          const browserProvider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await browserProvider.send("eth_accounts", []);
+
+          if (accounts.length > 0) {
+            const supportedProvider = await ensureCorrectNetwork(browserProvider);
+            const restoredSigner = await supportedProvider.getSigner();
+            const restoredAddress = await restoredSigner.getAddress();
+
+            setProvider(supportedProvider);
+            setSigner(restoredSigner);
+            setAddress(restoredAddress);
+            await checkNetwork(supportedProvider);
+            await fetchBalance(restoredAddress, supportedProvider);
+            return;
+          }
+        } catch (error) {
+          console.error("Failed to restore MetaMask connection", error);
+        }
+      }
+
+      if (localStorage.getItem('web3auth_mock_key')) {
+        connectWeb3Auth();
+      }
+    };
+
+    restoreConnection();
+  }, [checkNetwork, connectWeb3Auth, ensureCorrectNetwork, fetchBalance]);
 
   // Periodically refresh balance if connected
   useEffect(() => {
     if (address && provider) {
       console.log("Setting up balance refresh interval");
       let failureCount = 0;
-      
+
       const refreshBalance = async () => {
         try {
           const bal = await provider.getBalance(address);
@@ -185,7 +211,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         } catch (err: any) {
           failureCount++;
           console.warn(`Balance refresh failed (${failureCount} times):`, err?.code);
-          
+
           // After multiple failures, try again more aggressively
           if (failureCount > 5) {
             console.warn("RPC seems down, will retry more frequently");

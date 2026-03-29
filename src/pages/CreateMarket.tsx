@@ -36,7 +36,7 @@ export const CreateMarket: React.FC = () => {
         </div>
         <div className="space-y-2">
           <h2 className="text-5xl font-black italic uppercase tracking-tighter">Market Deployed</h2>
-          <p className="text-brand-muted text-[10px] font-bold uppercase tracking-widest">Your prediction market is now live on Shardeum Sphinx.</p>
+          <p className="text-brand-muted text-[10px] font-bold uppercase tracking-widest">Your prediction market is now live on Shardeum EVM Testnet.</p>
         </div>
         <div className="bg-brand-card border border-brand-border p-6 mono text-xs text-brand-accent break-all">
           TX_HASH: 0x72a1b89c23f4e5d6a7b8c9d0e1f2a3b4c5d6e7f8
@@ -62,7 +62,7 @@ export const CreateMarket: React.FC = () => {
           Initialize New Market
         </h1>
         <p className="text-brand-muted text-sm font-bold uppercase tracking-widest">
-          Deploy a decentralized prediction market on Shardeum Sphinx.
+          Deploy a decentralized prediction market on Shardeum EVM Testnet.
         </p>
       </div>
 

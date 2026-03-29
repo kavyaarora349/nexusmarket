@@ -46,7 +46,7 @@ export const NetworkGuard: React.FC<{ children: React.ReactNode }> = ({ children
           <div className="space-y-3">
             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">Network Error</h2>
             <p className="text-[10px] text-brand-muted font-bold uppercase tracking-[0.2em] leading-relaxed">
-              NexusMarket protocol is strictly deployed on <span className="text-brand-accent">Shardeum Atomium</span>. Please switch your provider network to continue.
+              NexusMarket protocol is strictly deployed on <span className="text-brand-accent">Shardeum EVM Testnet</span>. Please switch your provider network to continue.
             </p>
           </div>
           <button
@@ -56,7 +56,7 @@ export const NetworkGuard: React.FC<{ children: React.ReactNode }> = ({ children
             <RefreshCw size={18} />
             Switch to Shardeum
           </button>
-          
+
           <div className="pt-4 flex items-center justify-center gap-2 text-brand-muted mono text-[9px] font-bold uppercase tracking-widest">
             <Zap size={12} className="fill-brand-muted" />
             Chain ID: {SHARDEUM_SPHINX.chainId}

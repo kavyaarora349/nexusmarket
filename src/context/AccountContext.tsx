@@ -5,18 +5,32 @@ import { useWallet } from './WalletContext';
 export interface Bet {
   id: string;
   market: string;
-  side: 'YES' | 'NO';
+  side: 'YES' | 'NO' | 'PARLAY' | 'ALLOCATE';
   amount: number;
   payout: number;
   timestamp: number;
   status: 'Active' | 'Resolved';
   result?: 'YES' | 'NO';
+  type?: 'market' | 'parlay' | 'syndicate';
+  txHash?: string;
+  details?: string | null;
+}
+
+interface RecordBetInput {
+  type: 'market' | 'parlay' | 'syndicate';
+  market: string;
+  side: 'YES' | 'NO' | 'PARLAY' | 'ALLOCATE';
+  amount: number;
+  payout: number;
+  txHash?: string;
+  details?: string | null;
 }
 
 interface AccountContextType {
   balance: number;
   history: Bet[];
-  placeBet: (market: string, side: 'YES' | 'NO', amount: number, payout: number) => { success: boolean; error?: string };
+  isHistoryLoading: boolean;
+  recordBet: (bet: RecordBetInput) => Promise<{ success: boolean; error?: string }>;
 }
 
 const AccountContext = createContext<AccountContextType | undefined>(undefined);
@@ -26,31 +40,37 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const { balance: walletBalance } = useWallet();
   const [balance, setBalance] = useState<number>(0);
   const [history, setHistory] = useState<Bet[]>([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(true);
 
   // Each user has their own local storage key
   const storageKey = user ? `nexus_account_${user.id}` : 'nexus_account_guest';
 
   // Load state from localStorage on mount or user change
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      const { history: savedHistory } = JSON.parse(saved);
-      setHistory(savedHistory);
-    } else {
-      // Initialize for new user
+    setIsHistoryLoading(true);
+
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setHistory(Array.isArray(parsed?.history) ? parsed.history : []);
+      } else {
+        setHistory([]);
+      }
+    } catch (error) {
       setHistory([]);
+    } finally {
+      setIsHistoryLoading(false);
     }
   }, [storageKey]);
 
   // Update balance from wallet
   useEffect(() => {
-    if (walletBalance) {
-      try {
-        const balanceNum = parseFloat(walletBalance);
-        setBalance(isNaN(balanceNum) ? 0 : balanceNum);
-      } catch (e) {
-        setBalance(0);
-      }
+    try {
+      const balanceNum = parseFloat(walletBalance);
+      setBalance(Number.isFinite(balanceNum) ? balanceNum : 0);
+    } catch (error) {
+      setBalance(0);
     }
   }, [walletBalance]);
 
@@ -59,29 +79,25 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ child
     localStorage.setItem(storageKey, JSON.stringify({ history }));
   }, [history, storageKey]);
 
-  const placeBet = (market: string, side: 'YES' | 'NO', amount: number, payout: number) => {
-    if (amount > balance) {
+  const recordBet = async (bet: RecordBetInput) => {
+    if (bet.amount > balance) {
       return { success: false, error: 'Insufficient Balance' };
     }
 
     const newBet: Bet = {
       id: Math.random().toString(36).substring(7),
-      market,
-      side,
-      amount,
-      payout,
+      ...bet,
       timestamp: Date.now(),
       status: 'Active'
     };
 
-    setBalance(prev => prev - amount);
     setHistory(prev => [newBet, ...prev]);
 
     return { success: true };
   };
 
   return (
-    <AccountContext.Provider value={{ balance, history, placeBet }}>
+    <AccountContext.Provider value={{ balance, history, isHistoryLoading, recordBet }}>
       {children}
     </AccountContext.Provider>
   );

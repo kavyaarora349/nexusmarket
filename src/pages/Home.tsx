@@ -20,14 +20,14 @@ export const Home: React.FC = () => {
             <Zap size={24} className="fill-brand-accent" />
             <span className="text-sm font-black uppercase tracking-[0.4em] mono">Nexus Protocol v1.0</span>
           </div>
-          
+
           <h1 className="text-7xl md:text-9xl font-black uppercase italic tracking-tighter leading-[0.85] text-white">
             TRADE THE <br />
             <span className="text-brand-accent">FUTURE.</span>
           </h1>
-          
+
           <p className="text-brand-muted text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-            NexusMarket is the professional-grade prediction terminal for the Shardeum ecosystem. 
+            NexusMarket is the professional-grade prediction terminal for the Shardeum ecosystem.
             Hedge risk, speculate on events, and provide liquidity with zero-latency execution.
           </p>
         </motion.div>
@@ -57,7 +57,7 @@ export const Home: React.FC = () => {
             { label: 'Volume', value: '1.2M+', icon: TrendingUp },
             { label: 'Markets', value: '500+', icon: Activity },
             { label: 'Security', value: 'Audit', icon: Shield },
-            { label: 'Network', value: 'Sphinx', icon: Globe },
+            { label: 'Network', value: 'Mezame', icon: Globe },
           ].map((stat) => (
             <div key={stat.label} className="space-y-1">
               <div className="flex items-center gap-2 text-brand-muted">

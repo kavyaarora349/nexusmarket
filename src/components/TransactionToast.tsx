@@ -33,12 +33,12 @@ export const TransactionToast: React.FC<ToastProps> = ({ status, hash, message, 
 
       <div className="space-y-4">
         <p className="text-[10px] text-brand-muted font-bold uppercase tracking-widest leading-relaxed">
-          {message || (status === 'pending' ? 'Processing transaction on Shardeum Sphinx 1.X network...' : status === 'success' ? 'Transaction successfully recorded on-chain.' : 'Transaction execution reverted by EVM.')}
+          {message || (status === 'pending' ? 'Processing transaction on Shardeum EVM Testnet...' : status === 'success' ? 'Transaction successfully recorded on-chain.' : 'Transaction execution reverted by EVM.')}
         </p>
 
         {hash && (
           <a
-            href={`https://explorer-sphinx.shardeum.org/tx/${hash}`}
+            href={`https://explorer-mezame.shardeum.org/tx/${hash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full bg-brand-bg border border-brand-border hover:border-brand-accent py-2 text-[9px] font-black mono text-brand-accent uppercase tracking-[0.2em] transition-all"

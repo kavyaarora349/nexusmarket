@@ -110,7 +110,7 @@ export const Syndicates: React.FC = () => {
                     <div className="flex items-center justify-between border-b border-brand-border pb-2">
                         <h3 className="text-xs font-black uppercase tracking-[0.2em] text-brand-muted">Active Syndicates</h3>
                         <span className="text-[10px] bg-brand-accent text-black px-2 py-0.5 font-black uppercase tracking-widest">
-                            Live on Sphinx
+                            Live on Mezame
                         </span>
                     </div>
 
@@ -120,8 +120,8 @@ export const Syndicates: React.FC = () => {
                                 key={fund.id}
                                 onClick={() => setSelectedSyndicate(fund.id)}
                                 className={`bg-brand-card border p-6 cursor-pointer transition-all group ${selectedSyndicate === fund.id
-                                        ? 'border-brand-accent shadow-[0_0_15px_rgba(255,209,102,0.1)]'
-                                        : 'border-brand-border hover:border-brand-muted'
+                                    ? 'border-brand-accent shadow-[0_0_15px_rgba(255,209,102,0.1)]'
+                                    : 'border-brand-border hover:border-brand-muted'
                                     }`}
                             >
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -195,16 +195,16 @@ export const Syndicates: React.FC = () => {
                                     </div>
                                     <div className="relative">
                                         <input
-                                        type="number"
-                                        value={amount}
-                                        onChange={(e) => {
-                                            setAmount(e.target.value);
-                                            setError(null);
-                                        }}
-                                        placeholder="0.00"
-                                        min="0"
-                                        className="w-full bg-brand-bg border border-brand-border rounded-none py-4 px-4 mono text-xl focus:outline-none focus:border-brand-accent transition-colors"
-                                    />
+                                            type="number"
+                                            value={amount}
+                                            onChange={(e) => {
+                                                setAmount(e.target.value);
+                                                setError(null);
+                                            }}
+                                            placeholder="0.00"
+                                            min="0"
+                                            className="w-full bg-brand-bg border border-brand-border rounded-none py-4 px-4 mono text-xl focus:outline-none focus:border-brand-accent transition-colors"
+                                        />
                                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-muted font-bold text-xs mono">SHM</div>
                                     </div>
                                     <div className="flex gap-1 pt-1">
@@ -244,8 +244,8 @@ export const Syndicates: React.FC = () => {
                                     onClick={handleDeposit}
                                     disabled={isLoading || (isConnected && !isAmountValid)}
                                     className={`w-full py-4 font-bold text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2 ${isLoading || (isConnected && !isAmountValid)
-                                            ? 'bg-brand-border text-brand-muted cursor-not-allowed'
-                                            : 'bg-brand-accent hover:bg-brand-accent-hover text-black'
+                                        ? 'bg-brand-border text-brand-muted cursor-not-allowed'
+                                        : 'bg-brand-accent hover:bg-brand-accent-hover text-black'
                                         }`}
                                 >
                                     {isLoading ? (
